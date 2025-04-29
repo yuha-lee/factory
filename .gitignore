@@ -1,0 +1,5 @@
+scripts/node_modules/
+.env
+server/node_modules/
+templates/
+build/generated/
