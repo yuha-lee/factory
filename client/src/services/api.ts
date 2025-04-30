@@ -1,19 +1,9 @@
 import axios from 'axios';
-import * as Keychain from 'react-native-keychain';
 import Config from 'react-native-config';
 
 const API = axios.create({ baseURL: Config.API_BASE_URL });
 
-API.interceptors.request.use(
-  async config => {
-    const creds = await Keychain.getGenericPassword({ service: 'accessToken' });
-    if (creds) {
-      config.headers!['Authorization'] = `Bearer ${creds.password}`;
-    }
-    return config;
-  },
-  err => Promise.reject(err)
-);
+API.interceptors.request.use(config => Promise.resolve(config));
 
 export async function fetchTheme(tenantId: string) {
   return API.get(`/api/themes/${tenantId}`).then(r => r.data);

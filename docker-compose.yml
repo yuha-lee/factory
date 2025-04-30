@@ -13,28 +13,6 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  keycloak:
-    image: quay.io/keycloak/keycloak:latest
-    container_name: keycloak
-    command:
-      - start
-      - --db=postgres
-      - --http-enabled=true
-      - --hostname-strict=false
-    env_file: .env
-    environment:
-      - KEYCLOAK_ADMIN
-      - KEYCLOAK_ADMIN_PASSWORD
-      - DB_VENDOR
-      - DB_ADDR
-      - DB_DATABASE
-      - DB_USER
-      - DB_PASSWORD
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
-
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: pgadmin
@@ -59,15 +37,11 @@ services:
       - DB_USER
       - DB_PASS
       - DB_NAME
-      - KEYCLOAK_URL
-      - KEYCLOAK_REALM
-      - KEYCLOAK_CLIENT_ID
       - FIREBASE_SERVICE_ACCOUNT
     ports:
       - "3333:3000"
     depends_on:
       - postgres
-      - keycloak
 
 volumes:
   pgdata:
