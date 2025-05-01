@@ -9,7 +9,7 @@ export interface SliderProps {
   maximumValue?: number;
   style?: ViewStyle;
 }
-export function Slideraaa({ value, onValueChange, minimumValue = 0, maximumValue = 1, style }: SliderProps) {
+export default function Slideraaa({ value, onValueChange, minimumValue = 0, maximumValue = 1, style }: SliderProps) {
   const theme = useTheme();
   return (
     <Slider

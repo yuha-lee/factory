@@ -6,7 +6,7 @@ export interface AvatarProps {
   size?: number;
   style?: ImageStyle;
 }
-export function Avatar({ uri, size = 40, style }: AvatarProps) {
+export default function Avatar({ uri, size = 40, style }: AvatarProps) {
   const theme = useTheme();
   const styles = StyleSheet.create({
     image: {

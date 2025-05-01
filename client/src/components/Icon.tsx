@@ -9,7 +9,7 @@ export interface IconProps {
   color?: string;
   style?: ViewStyle;
 }
-export function Icon({ name, size, color, style }: IconProps) {
+export default function Icon({ name, size, color, style }: IconProps) {
   const theme = useTheme();
   return (
     <MaterialIcons

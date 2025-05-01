@@ -7,7 +7,7 @@ export interface TooltipProps {
   children: React.ReactNode;
   style?: ViewStyle;
 }
-export function Tooltip({ text, children, style }: TooltipProps) {
+export default function Tooltip({ text, children, style }: TooltipProps) {
   const [visible, setVisible] = useState(false);
   const theme = useTheme();
   const styles = StyleSheet.create({

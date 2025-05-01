@@ -7,7 +7,7 @@ export interface ImageProps {
   style?: ImageStyle;
 }
 
-export function Image({ src, style }: ImageProps) {
+export default function Image({ src, style }: ImageProps) {
   const theme = useTheme();
   const styles = StyleSheet.create({
     base: {

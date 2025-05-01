@@ -5,7 +5,7 @@ export interface CardProps {
   children?: React.ReactNode;
   style?: ViewStyle;
 }
-export function Card({ children, style }: CardProps) {
+export default function Card({ children, style }: CardProps) {
   const theme = useTheme();
   const styles = StyleSheet.create({
     base: {

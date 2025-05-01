@@ -7,7 +7,7 @@ export interface ModalProps {
   children?: React.ReactNode;
   style?: ViewStyle;
 }
-export function Modal({ visible, onClose, children, style }: ModalProps) {
+export default function Modal({ visible, onClose, children, style }: ModalProps) {
   const theme = useTheme();
   const styles = StyleSheet.create({
     backdrop: {

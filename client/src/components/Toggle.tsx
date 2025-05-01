@@ -8,7 +8,7 @@ export interface ToggleProps {
   style?: ViewStyle;
 }
 
-export function Toggle({ value, onValueChange, style }: ToggleProps) {
+export default function Toggle({ value, onValueChange, style }: ToggleProps) {
   const theme = useTheme();
   return (
     <Switch

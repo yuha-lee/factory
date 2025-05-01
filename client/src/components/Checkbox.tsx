@@ -4,7 +4,7 @@ import { ToggleProps } from "./Toggle";
 
 interface CheckboxProps extends ToggleProps {}
 
-export function Checkbox({ value, onValueChange, style }: CheckboxProps) {
+export default function Checkbox({ value, onValueChange, style }: CheckboxProps) {
   const theme = useTheme();
   const styles = StyleSheet.create({
     box: {

@@ -9,7 +9,7 @@ export interface PopoverProps {
   children: React.ReactNode;
   style?: ViewStyle;
 }
-export function Popover({ visible, content, onClose, children, style }: PopoverProps) {
+export default function Popover({ visible, content, onClose, children, style }: PopoverProps) {
   const theme = useTheme();
   const styles = StyleSheet.create({
     backdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' },

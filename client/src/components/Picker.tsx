@@ -2,13 +2,13 @@ import { ViewStyle } from "react-native";
 import { useTheme } from "../theme/ThemeContext";
 import { Picker as ReactNativePicker } from '@react-native-picker/picker';
 
-export interface PickerSelectProps {
+export interface PickerProps {
   selectedValue: any;
   onValueChange: (itemValue: any) => void;
   items: { label: string; value: any }[];
   style?: ViewStyle;
 }
-export function PickerSelect({ selectedValue, onValueChange, items, style }: PickerSelectProps) {
+export default function Picker({ selectedValue, onValueChange, items, style }: PickerProps) {
   const theme = useTheme();
   return (
     <ReactNativePicker
