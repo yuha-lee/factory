@@ -71,8 +71,3 @@ export const token = {
     },
   }
 } as const;
-
-export type ThemeTokens = {
-  base: typeof token.base;
-  colors: typeof token.modes.light;
-};

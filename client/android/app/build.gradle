@@ -7,24 +7,38 @@ apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.grad
 task syncThemes(type: Exec) {
     description = 'Sync themes from Supabase database'
     workingDir = file('../../..')
-    commandLine = ['npm', 'run', 'sync-themes']
-    outputs.file('../../tenants.yaml')
+    
+    // Windows에서 npm.cmd 사용, Unix에서 npm 사용
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        commandLine = ['npm.cmd', 'run', 'sync-themes']
+    } else {
+        commandLine = ['npm', 'run', 'sync-themes']
+    }
+    
+    outputs.file('../../../tenants.yaml')
 }
 
 task generateTenantResources(type: Exec) {
     description = 'Generate Android resources from tenant YAML configuration'
     dependsOn syncThemes
     workingDir = file('../../..')
-    commandLine = ['npm', 'run', 'generate-resources']
-    inputs.file('../../tenants.yaml')
+    
+    // Windows에서 npm.cmd 사용, Unix에서 npm 사용
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        commandLine = ['npm.cmd', 'run', 'generate-resources']
+    } else {
+        commandLine = ['npm', 'run', 'generate-resources']
+    }
+    
+    inputs.file('../../../tenants.yaml')
     outputs.dir('src/main/res')
 }
 
 preBuild.dependsOn generateTenantResources
 
 project.ext.envConfigFiles = [
-    debug: ".env",
-    release: ".env",
+    debug: "../../.env",
+    release: "../../.env",
 ]
 /**
  * This is the configuration block to customize your React Native Android app.

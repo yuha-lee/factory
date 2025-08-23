@@ -20,10 +20,12 @@ function renderTemplate(templateName, data) {
 }
 
 tenants.forEach(tenant => {
+  // Use flavor-specific source sets instead of values-{tenant} directories
   const baseDir = path.resolve(
     __dirname,
-    '../client/android/app/src/main/res',
-    `values-${tenant.id}`
+    '../client/android/app/src',
+    tenant.id,
+    'res/values'
   );
 
   if (!fs.existsSync(baseDir)) fs.mkdirSync(baseDir, { recursive: true });
@@ -33,4 +35,6 @@ tenants.forEach(tenant => {
 
   const stringsXml = renderTemplate('strings.xml.ejs', tenant);
   fs.writeFileSync(path.join(baseDir, 'strings.xml'), stringsXml, 'utf8');
+  
+  console.log(`✅ Generated resources for ${tenant.id} in ${baseDir}`);
 });

@@ -36,7 +36,6 @@ const actionEventMap: Record<string, string> = {
 };
 
 export type ComponentDefinition = {
-  id?: string;
   type: string;
   props?: Record<string, any>;
   action?: any;
@@ -44,7 +43,7 @@ export type ComponentDefinition = {
 };
 
 export function renderComponent(def: ComponentDefinition, onAction: (action: any) => void) {
-  const { id = uuid.v4(), type, action, children } = def;
+  const { type, action, children } = def;
   const Component = componentMap[type];
   if (!Component) {
     console.warn(`Unknown component type: ${type}`);
@@ -70,7 +69,7 @@ export function renderComponent(def: ComponentDefinition, onAction: (action: any
     renderedChildren = children as React.ReactNode;
   }
 
-  return <Component key={id} {...props}>
+  return <Component key={uuid.v4()} {...props}>
     {renderedChildren}
   </Component>;
 }
