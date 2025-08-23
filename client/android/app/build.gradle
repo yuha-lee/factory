@@ -4,11 +4,19 @@ apply plugin: "com.facebook.react"
 apply from: "flavors.gradle"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
+task syncThemes(type: Exec) {
+    description = 'Sync themes from Supabase database'
+    workingDir = file('../../..')
+    commandLine = ['npm', 'run', 'sync-themes']
+    outputs.file('../../tenants.yaml')
+}
+
 task generateTenantResources(type: Exec) {
     description = 'Generate Android resources from tenant YAML configuration'
-    workingDir = file('../../server/scripts')
-    commandLine = ['node', 'generate-resources.js']
-    inputs.file('../../server/themes/tenants.yaml')
+    dependsOn syncThemes
+    workingDir = file('../../..')
+    commandLine = ['npm', 'run', 'generate-resources']
+    inputs.file('../../tenants.yaml')
     outputs.dir('src/main/res')
 }
 
