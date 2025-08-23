@@ -1,7 +1,23 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+apply from: "flavors.gradle"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
+task generateTenantResources(type: Exec) {
+    description = 'Generate Android resources from tenant YAML configuration'
+    workingDir = file('../../server/scripts')
+    commandLine = ['node', 'generate-resources.js']
+    inputs.file('../../server/themes/tenants.yaml')
+    outputs.dir('src/main/res')
+}
+
+preBuild.dependsOn generateTenantResources
+
+project.ext.envConfigFiles = [
+    debug: ".env",
+    release: ".env",
+]
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -84,7 +100,20 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        resValue "string", "build_config_package", "com.client"
     }
+
+    flavorDimensions "tenant"
+    
+    productFlavors {
+        tenantList.each { tenantId ->
+            create(tenantId) {
+                dimension "tenant"
+                applicationIdSuffix ".${tenantId}"
+            }
+        }
+    }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -108,7 +137,6 @@ android {
 }
 
 dependencies {
-    // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 
     if (hermesEnabled.toBoolean()) {

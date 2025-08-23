@@ -1,8 +1,16 @@
 {
+  "name": "theme-scripts",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "sync-themes": "node sync-themes.js",
+    "generate-resources": "node generate-resources.js",
+    "build-android": "npm run sync-themes && npm run generate-resources"
+  },
   "dependencies": {
+    "@supabase/supabase-js": "^2.34.3",
+    "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
-    "fs": "^0.0.1-security",
-    "path": "^0.12.7",
     "yamljs": "^0.3.0"
   }
 }

@@ -1,5 +1,33 @@
-scripts/node_modules/
+# Environment variables
 .env
-server/node_modules/
-templates/
-build/generated/
+
+# Generated/synced files
+tenants.yaml
+
+# Node.js
+scripts/node_modules/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Generated Android resources
+client/android/app/src/main/res/values-tenant*/
+
+# Build outputs
+**/build/
+**/build/generated/
+client/android/app/build/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

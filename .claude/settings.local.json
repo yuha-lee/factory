@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp add:*)",
+      "Bash(dir C:Usersyuharepositoriesfactorysupabase)",
+      "Bash(node:*)",
+      "Bash(npm install)",
+      "Bash(npm run sync-themes:*)",
+      "Bash(npm run generate-resources:*)",
+      "Bash(npm run build-android:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

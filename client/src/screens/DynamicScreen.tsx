@@ -1,47 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
-import { fetchTheme, fetchSchema } from '../services/api';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { fetchSchema } from '../services/api';
 import { renderComponent } from '../utils/renderer';
 import ScrollContainer from '../components/ScrollContainer';
+import Container from '../components/Container';
 import Spinner from '../components/Spinner';
-import { getTenantConfig } from '../config/tenant';
+import Text from '../components/Text';
+import { useTenant } from '../contexts/tenant/TenantContext';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-interface DynamicScreenProps {
-  route: { params: { screenName: string } };
-  navigation: any;
-}
+type RootStackParamList = {
+  Dynamic: { screenName: string };
+};
 
-export default function DynamicScreen({ route, navigation }: DynamicScreenProps) {
-  const { screenName } = route.params;
-  const { tenantId } = getTenantConfig();
+type DynamicScreenNavProp = NativeStackNavigationProp<RootStackParamList, 'Dynamic'>;
+
+interface RouteParams {
+  screenName: string;
+};
+
+export default function DynamicScreen() {
+  const route = useRoute();
+  const navigation = useNavigation<DynamicScreenNavProp>();
+
+  const { tenantId } = useTenant();
+  const { screenName } = route.params as RouteParams;
   const [schema, setSchema] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let isMounted = true;
-    async function load() {
-      try {
-        const ui = await fetchSchema(tenantId, screenName);
-        if (!isMounted) {
-          return;
-        }
-        setSchema(ui);
-      } catch (err) {
-        console.error('Failed to load schema:', err);
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    }
-    load();
-    return () => { isMounted = false; };
+    fetchSchema(tenantId, screenName)
+      .then(schema => setSchema(schema))
+      .catch(error => setError(error))
+      .finally(() => setLoading(false));
   }, [tenantId, screenName]);
 
   const handleAction = (action: any) => {
     switch (action.type) {
       case 'navigate':
-        navigation.navigate(action.screen, { screenName: action.screen });
+        navigation.replace('Dynamic', { screenName: action.screen });
         break;
       case 'api':
         // TODO: API 호출 액션
@@ -54,9 +52,19 @@ export default function DynamicScreen({ route, navigation }: DynamicScreenProps)
 
   if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Container style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Spinner size="large" />
-      </View>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}>
+        <Text style={{ color: 'red', textAlign: 'center' }}>
+          {error || '화면 정의가 없습니다.'}
+        </Text>
+      </Container>
     );
   }
 

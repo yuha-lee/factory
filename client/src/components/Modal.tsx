@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, View, ViewStyle, Modal as ReactNativeModal } from "react-native";
-import { useTheme } from "../theme/ThemeContext";
+import { useTheme } from "../contexts/theme/ThemeContext";
 
 export interface ModalProps {
   visible: boolean;

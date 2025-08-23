@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image as ReactNativeImage, ImageStyle, StyleSheet } from 'react-native';
-import { useTheme } from '../theme/ThemeContext';
+import { useTheme } from '../contexts/theme/ThemeContext';
 
 export interface ImageProps {
   src: string;

@@ -1,5 +1,5 @@
 import { ViewStyle } from "react-native";
-import { useTheme } from "../theme/ThemeContext";
+import { useTheme } from "../contexts/theme/ThemeContext";
 import { Switch } from "react-native";
 
 export interface ToggleProps {

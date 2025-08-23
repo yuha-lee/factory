@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView as ReactNativeScrollView, ScrollViewProps, StyleSheet } from 'react-native';
-import { useTheme } from '../theme/ThemeContext';
+import { useTheme } from '../contexts/theme/ThemeContext';
 
 export default function ScrollView(props: ScrollViewProps) {
   const theme = useTheme();
@@ -10,5 +10,5 @@ export default function ScrollView(props: ScrollViewProps) {
       backgroundColor: theme.colors.background,
     },
   });
-  return <ScrollView contentContainerStyle={[styles.base, props.contentContainerStyle]} {...props} />;
+  return <ReactNativeScrollView contentContainerStyle={[styles.base, props.contentContainerStyle]} {...props} />;
 }

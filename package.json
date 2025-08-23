@@ -1,0 +1,14 @@
+{
+  "name": "factory",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "sync-themes": "cd scripts && npm run sync-themes",
+    "generate-resources": "cd scripts && npm run generate-resources", 
+    "build-android": "cd scripts && npm run build-android",
+    "install-deps": "cd scripts && npm install && cd ../client && npm install"
+  },
+  "dependencies": {
+    "supabase": "^2.34.3"
+  }
+}

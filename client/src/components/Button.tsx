@@ -7,7 +7,7 @@ import {
   TextStyle,
   GestureResponderEvent,
 } from 'react-native';
-import { useTheme } from '../theme/ThemeContext';
+import { useTheme } from '../contexts/theme/ThemeContext';
 
 export interface ButtonProps {
   text: string;

@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { useTheme } from "../theme/ThemeContext";
+import { useTheme } from "../contexts/theme/ThemeContext";
 import { ToggleProps } from "./Toggle";
 
 interface CheckboxProps extends ToggleProps {}

@@ -1,4 +1,4 @@
-import { useTheme } from "../theme/ThemeContext";
+import { useTheme } from "../contexts/theme/ThemeContext";
 import { Image as ReactNativeImage, ImageStyle, StyleSheet } from 'react-native';
 
 export interface AvatarProps {

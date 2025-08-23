@@ -1,6 +1,7 @@
 import Avatar from "../components/Avatar";
 import Button from "../components/Button";
 import Card from "../components/Card";
+import Container from "../components/Container";
 import Checkbox from "../components/Checkbox";
 import FlatList from "../components/FlatList";
 import Icon from "../components/Icon";
@@ -16,10 +17,10 @@ import Text from "../components/Text";
 import TestInput from "../components/TextInput";
 import Toggle from "../components/Toggle";
 import Tooltip from "../components/Tooltip";
-import { v4 as uuid } from 'uuid';
+import uuid from 'react-native-uuid';
 
 const componentMap: Record<string, React.ComponentType<any>> = {
-  Avatar, Button, Card, Checkbox, FlatList, Icon, Image, Modal,
+  Avatar, Button, Card, Container, Checkbox, FlatList, Icon, Image, Modal,
   Picker, Popover, ProgressBar, ScrollView, Slider, Spinner,
   Text, TestInput, Toggle, Tooltip
 };
@@ -43,7 +44,7 @@ export type ComponentDefinition = {
 };
 
 export function renderComponent(def: ComponentDefinition, onAction: (action: any) => void) {
-  const { id = uuid(), type, action, children } = def;
+  const { id = uuid.v4(), type, action, children } = def;
   const Component = componentMap[type];
   if (!Component) {
     console.warn(`Unknown component type: ${type}`);
@@ -55,11 +56,21 @@ export function renderComponent(def: ComponentDefinition, onAction: (action: any
     const event = actionEventMap[type] || 'onPress';
     props = {
       ...props,
-      [event]: (...args: any[]) => onAction(action(...args))
+      [event]: (...args: any[]) => onAction(action)
     }
   }
 
+  let renderedChildren: React.ReactNode = null;
+
+  if (Array.isArray(children)) {
+    renderedChildren = children.map(childDef => renderComponent(childDef, onAction));
+  } else if (children && typeof children === 'object' && 'type' in children) {
+    renderedChildren = renderComponent(children as ComponentDefinition, onAction);
+  } else {
+    renderedChildren = children as React.ReactNode;
+  }
+
   return <Component key={id} {...props}>
-    {children}
+    {renderedChildren}
   </Component>;
 }

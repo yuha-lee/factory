@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
-import { useTheme } from "../theme/ThemeContext";
+import { useTheme } from "../contexts/theme/ThemeContext";
 
 export interface PopoverProps {
   visible: boolean;

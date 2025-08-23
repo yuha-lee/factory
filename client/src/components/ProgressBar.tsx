@@ -1,5 +1,5 @@
 import { View, ViewStyle } from "react-native";
-import { useTheme } from "../theme/ThemeContext";
+import { useTheme } from "../contexts/theme/ThemeContext";
 
 export interface ProgressBarProps {
   progress: number;

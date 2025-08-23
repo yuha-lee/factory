@@ -1,26 +1,36 @@
 const fs = require('fs');
 const path = require('path');
-const YAML = require('yamljs');
+const yaml = require('yamljs');
 const ejs = require('ejs');
 
-const tenants = YAML.load(path.resolve(__dirname, '../themes/tenants.yaml'));
+// Load tenant themes from synced YAML file
+const tenantsPath = path.resolve(__dirname, '../tenants.yaml');
 
-tenants.forEach(t => {
-  const baseDir = path.resolve(__dirname, '../build/generated/res', t.id);
-  const valuesDir = path.join(baseDir, 'values');
-  fs.mkdirSync(valuesDir, { recursive: true });
+if (!fs.existsSync(tenantsPath)) {
+  console.error('❌ Tenants YAML file not found. Run `npm run sync-themes` first.');
+  process.exit(1);
+}
 
-  const colorsTemplate = fs.readFileSync(
-    path.resolve(__dirname, '../templates/colors.xml.ejs'),
-    'utf8'
+const tenants = yaml.load(tenantsPath);
+
+function renderTemplate(templateName, data) {
+  const templatePath = path.resolve(__dirname, '../templates', templateName);
+  const template = fs.readFileSync(templatePath, 'utf8');
+  return ejs.render(template, data);
+}
+
+tenants.forEach(tenant => {
+  const baseDir = path.resolve(
+    __dirname,
+    '../client/android/app/src/main/res',
+    `values-${tenant.id}`
   );
-  const colorsXml = ejs.render(colorsTemplate, { colors: t.colors });
-  fs.writeFileSync(path.join(valuesDir, 'colors.xml'), colorsXml);
 
-  const stringsTemplate = fs.readFileSync(
-    path.resolve(__dirname, '../templates/strings.xml.ejs'),
-    'utf8'
-  );
-  const stringsXml = ejs.render(stringsTemplate, { appName: t.name });
-  fs.writeFileSync(path.join(valuesDir, 'strings.xml'), stringsXml);
+  if (!fs.existsSync(baseDir)) fs.mkdirSync(baseDir, { recursive: true });
+
+  const colorsXml = renderTemplate('colors.xml.ejs', tenant);
+  fs.writeFileSync(path.join(baseDir, 'colors.xml'), colorsXml, 'utf8');
+
+  const stringsXml = renderTemplate('strings.xml.ejs', tenant);
+  fs.writeFileSync(path.join(baseDir, 'strings.xml'), stringsXml, 'utf8');
 });

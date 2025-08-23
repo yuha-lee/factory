@@ -1,5 +1,5 @@
 import { ViewStyle } from "react-native";
-import { useTheme } from "../theme/ThemeContext";
+import { useTheme } from "../contexts/theme/ThemeContext";
 import { Picker as ReactNativePicker } from '@react-native-picker/picker';
 
 export interface PickerProps {

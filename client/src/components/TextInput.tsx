@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput as ReactNativeTextInput, StyleSheet, TextInputProps } from 'react-native';
-import { useTheme } from '../theme/ThemeContext';
+import { useTheme } from '../contexts/theme/ThemeContext';
 
 export default function TextInput(props: TextInputProps) {
   const theme = useTheme();

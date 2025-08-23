@@ -1,6 +1,6 @@
 import React from "react";
 import { ViewStyle } from "react-native";
-import { useTheme } from "../theme/ThemeContext";
+import { useTheme } from "../contexts/theme/ThemeContext";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export interface IconProps {

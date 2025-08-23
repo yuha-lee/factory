@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text as ReactNativeText, StyleSheet, TextStyle } from 'react-native';
-import { useTheme } from '../theme/ThemeContext';
+import { useTheme } from '../contexts/theme/ThemeContext';
 
 export interface TextProps {
   children: string;
