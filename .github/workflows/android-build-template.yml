@@ -37,6 +37,13 @@ jobs:
         npm ci
         cd scripts && npm ci
       
+    - name: Create environment file
+      run: |
+        echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" > .env
+        echo "SUPABASE_SERVICE_ROLE_KEY=${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" >> .env
+        echo "EXPO_PUBLIC_SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> .env
+        echo "EXPO_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env
+      
     - name: Sync themes from Supabase
       run: npm run sync-themes
       
