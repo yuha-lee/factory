@@ -3,11 +3,11 @@ name: Android Build Template (Copy for each tenant)
 # This is a TEMPLATE file. Copy and customize for each tenant.
 # Example: android-build-tenantA.yml, android-build-tenantB.yml
 
+# TEMPLATE FILE - DO NOT RUN
+# Copy this file to .github/workflows/ and customize for each tenant
 on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
+  # Disabled - this is a template file
+  workflow_dispatch: # Manual trigger only for template testing
 
 jobs:
   build:
