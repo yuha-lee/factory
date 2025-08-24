@@ -95,7 +95,7 @@ react {
 /**
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
@@ -132,6 +132,12 @@ android {
             create(tenantId) {
                 dimension "tenant"
                 applicationIdSuffix ".${tenantId}"
+                
+                // Apply tenant-specific signing for release builds
+                def signingConfigName = "${tenantId}Release"
+                if (signingConfigs.hasProperty(signingConfigName)) {
+                    signingConfig = signingConfigs[signingConfigName]
+                }
             }
         }
     }
@@ -143,17 +149,33 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        
+        // Dynamic signing configs for each tenant
+        tenantList.each { tenantId ->
+            def tenantUpper = tenantId.toUpperCase()
+            def storeFileProperty = "${tenantUpper}_STORE_FILE"
+            def storePasswordProperty = "${tenantUpper}_STORE_PASSWORD"
+            def keyAliasProperty = "${tenantUpper}_KEY_ALIAS"
+            def keyPasswordProperty = "${tenantUpper}_KEY_PASSWORD"
+            
+            create("${tenantId}Release") {
+                if (project.hasProperty(storeFileProperty)) {
+                    storeFile file(project.property(storeFileProperty))
+                    storePassword project.property(storePasswordProperty)
+                    keyAlias project.property(keyAliasProperty)
+                    keyPassword project.property(keyPasswordProperty)
+                }
+            }
+        }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            shrinkResources enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
 }

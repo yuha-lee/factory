@@ -38,9 +38,8 @@ newArchEnabled=false
 # If set to false, you will be using JSC instead.
 hermesEnabled=true
 
-# Multi-tenant UPLOAD KEY configuration for Google Play App Signing
-# Each tenant has its own upload key for security isolation
-# These are UPLOAD KEYS (not app signing keys) - Google manages app signing keys
+# Multi-tenant keystore configuration
+# Each tenant has its own keystore for security isolation
 # Store these values securely and never commit real credentials to version control
 
 # Tenant A keystore configuration
@@ -54,3 +53,10 @@ TENANTA_KEY_PASSWORD=tenantA-key-pass-change-me
 # TENANT[ID]_STORE_PASSWORD=[secure-password]
 # TENANT[ID]_KEY_ALIAS=[tenant-id]-key
 # TENANT[ID]_KEY_PASSWORD=[secure-password]
+
+
+# tenantB keystore configuration
+TENANTB_STORE_FILE=keystores/tenantB-release.keystore
+TENANTB_STORE_PASSWORD=0.bo8b4v8lnz0.tbi1et8c8
+TENANTB_KEY_ALIAS=tenantB-key
+TENANTB_KEY_PASSWORD=0.r45mbt2owy.egxbjl6cprt
